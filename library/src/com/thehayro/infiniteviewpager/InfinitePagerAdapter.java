@@ -24,7 +24,19 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
+ * Base class providing the adapter to populate inside of a {@link com.thehayro.infiniteviewpager.InfiniteViewPager}.
+ * The indication for each page is up the implementation. Meaning that it is up to the implementation what the next
+ * and previous page indication is. This is more generic than the regular PagerAdapter
+ * implementation, where the pages are indicated by its index and accessed through
+ * {@link android.support.v4.view.ViewPager#setCurrentItem(int, boolean)}.
+ * <p></p>
  *
+ * When you implement an adapter you must implement the following methods:
+ * <ul>
+ *     <li>{@link com.thehayro.infiniteviewpager.InfinitePagerAdapter#instantiateItem(Object)}</li>
+ *     <li>{@link InfinitePagerAdapter#getNextIndicator()}</li>
+ *     <li>{@link InfinitePagerAdapter#getPreviousIndicator()}</li>
+ * </ul>
  * @param <T>
  */
 public abstract class InfinitePagerAdapter<T> extends PagerAdapter {
@@ -35,6 +47,10 @@ public abstract class InfinitePagerAdapter<T> extends PagerAdapter {
 
     private T mCurrentIndicator;
 
+    /**
+     * Standard constructor.
+     * @param initValue the initial indicator value the ViewPager should start with.
+     */
     public InfinitePagerAdapter(T initValue) {
         mCurrentIndicator = initValue;
 
@@ -83,27 +99,51 @@ public abstract class InfinitePagerAdapter<T> extends PagerAdapter {
         return mCurrentIndicator;
     }
 
+    /**
+     *
+     * @return the next indicator.
+     */
     public abstract T getNextIndicator();
 
+    /**
+     *
+     * @return the previous indicator.
+     */
     public abstract T getPreviousIndicator();
 
+    /**
+     * Instantiates a page.
+     * @param indicator the indicator the page should be instantiated with.
+     * @return a ViewGroup containing the page layout.
+     */
     public abstract ViewGroup instantiateItem(T indicator);
 
+    /**
+     *
+     * @param currentIndicator the current value of the indicator.
+     * @return a string representation of the current indicator.
+     * @see #convertToIndicator(String)
+     */
     public String getStringRepresentation(final T currentIndicator) {
         return "";
     }
 
+    /**
+     * Convert the represented string back to its indicator
+     * @param representation the string representation of the current indicator.
+     * @return the indicator.
+     */
     public T convertToIndicator(final String representation) {
         return getCurrentIndicator();
     }
 
     @Override
-    public int getCount() {
+    public final int getCount() {
         return PAGE_COUNT;
     }
 
     @Override
-    public boolean isViewFromObject(final View view, final Object o) {
+    public final boolean isViewFromObject(final View view, final Object o) {
         return view == ((PageModel)o).getParentView();
     }
 

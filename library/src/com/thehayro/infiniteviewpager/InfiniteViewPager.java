@@ -33,10 +33,10 @@ import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.util.Log;
 
+/**
+ * ViewPager that allows infinite scrolling.
+ */
 public class InfiniteViewPager extends ViewPager {
-
-
-    private OnPageChangeListener mOnPageChangeListener;
 
     private int mCurrPosition;
 
@@ -121,14 +121,10 @@ public class InfiniteViewPager extends ViewPager {
         });
     }
 
-    public void setOnInfinitePageChangeListener(final OnPageChangeListener listener) {
-        mOnPageChangeListener = listener;
-    }
-
     @Override
     public final void setOffscreenPageLimit(final int limit) {
         if (limit != getOffscreenPageLimit()) {
-            throw new RuntimeException("OffscreenPageLimit cannot be changed");
+            throw new RuntimeException("OffscreenPageLimit cannot be changed.");
         }
         super.setOffscreenPageLimit(limit);
     }
@@ -139,7 +135,7 @@ public class InfiniteViewPager extends ViewPager {
             super.setAdapter(adapter);
             initInfiniteViewPager();
         } else {
-            throw new IllegalArgumentException("Adapter should be an instance of InfinitePagerAdapter");
+            throw new IllegalArgumentException("Adapter should be an instance of InfinitePagerAdapter.");
         }
     }
 }
