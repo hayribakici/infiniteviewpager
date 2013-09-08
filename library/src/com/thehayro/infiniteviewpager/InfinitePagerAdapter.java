@@ -24,7 +24,18 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- *
+ * Base class providing the adapter to populate inside of a {@link com.thehayro.infiniteviewpager.InfiniteViewPager}.
+ * The indication for each page is up the implementation. In a regular PagerAdapter implementation,
+ * the developer sets the number of pages, the ViewPager should have. The indication of each page is associated by
+ * its index and {@link android.support.v4.view.ViewPager#setCurrentItem(int, boolean)}.
+ * <p></p>
+ * 
+ * When you implement an adapter you must implement the following methods:
+ * <ul>
+ *     <li>{@link com.thehayro.infiniteviewpager.InfinitePagerAdapter#instantiateItem(Object)}</li>
+ *     <li>{@link InfinitePagerAdapter#getNextIndicator()}</li>
+ *     <li>{@link InfinitePagerAdapter#getPreviousIndicator()}</li>
+ * </ul>
  * @param <T>
  */
 public abstract class InfinitePagerAdapter<T> extends PagerAdapter {

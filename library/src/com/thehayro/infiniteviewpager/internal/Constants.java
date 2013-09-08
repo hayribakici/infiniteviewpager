@@ -6,7 +6,7 @@ public final class Constants {
         // nop
     }
 
-    public static boolean DEBUG = true;
+    public static boolean DEBUG = false;
 
     public static final int PAGE_POSITION_LEFT = 0;
     public static final int PAGE_POSITION_CENTER = 1;
