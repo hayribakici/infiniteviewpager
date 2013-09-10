@@ -134,18 +134,6 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>emma-maven-plugin</artifactId>
-                <configuration>
-                    <filters>
-                        <filter>-*.R</filter>
-                        <filter>-*.R$*</filter>
-                        <filter>-*.Manifest</filter>
-                        <filter>-*.BuildConfig</filter>
-                    </filters>
-                </configuration>
-            </plugin>
         </plugins>
     </build>
 </project>
