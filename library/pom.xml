@@ -3,26 +3,35 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <developers>
+        <developer>
+            <id>thehayro</id>
+            <name>Hayri Bakici</name>
+            <email>thehayro@gmail.com</email>
+        </developer>
+    </developers>
+
     <parent>
         <groupId>org.sonatype.oss</groupId>
         <artifactId>oss-parent</artifactId>
         <version>7</version>
     </parent>
 
+
     <groupId>com.thehayro</groupId>
     <artifactId>infiniteviewpager</artifactId>
     <version>0.1</version>
-    <packaging>pom</packaging>
-    <url>http://thehayro.blogspot.com</url>
-
+    <packaging>apklib</packaging>
+    <description>A modified ViewPager that allows infinite paging</description>
+    <url>http://thehayro.com</url>
     <name>InfiniteViewPager</name>
 
-    <!--<scm>-->
-    <!--<connection>scm:git:git@dev1.sprylab.com:purple/purplekitandroid.git</connection>-->
-    <!--<developerConnection>scm:git:git@dev1.sprylab.com:purple/purplekitandroid.git</developerConnection>-->
-    <!--<url>https://dev1.sprylab.com/redmine/projects/purplekitandroid/repository</url>-->
-    <!--<tag>HEAD</tag>-->
-    <!--</scm>-->
+    <scm>
+        <connection>scm:git:git@github.com:thehayro/infiniteviewpager.git</connection>
+        <developerConnection>scm:git:git@github.com:thehayro/infiniteviewpager.git</developerConnection>
+        <url>https://github.com/thehayro/infiniteviewpager</url>
+        <tag>HEAD</tag>
+    </scm>
 
     <properties>
         <!-- Project Properties -->
@@ -34,6 +43,11 @@
 
         <!-- Dependency Versions -->
         <com.google.android-version>4.3_r1</com.google.android-version>
+        <maven-resources-plugin.version>2.6</maven-resources-plugin.version>
+        <maven-compiler-plugin-version>3.1</maven-compiler-plugin-version>
+        <android-maven-plugin.version>3.6.1</android-maven-plugin.version>
+        <maven-source-plugin-version>2.2.1</maven-source-plugin-version>
+        <maven-javadoc-plugin-version>2.9.1</maven-javadoc-plugin-version>
     </properties>
 
 
@@ -50,95 +64,88 @@
             <artifactId>support-v4</artifactId>
             <version>${support-v4-version}</version>
         </dependency>
-
-
     </dependencies>
 
-
     <build>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-resources-plugin</artifactId>
-                    <version>${maven-resources-plugin.version}</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <version>${maven-compiler-plugin-version}</version>
-                    <configuration>
-                        <source>${java.version}</source>
-                        <target>${java.version}</target>
-                    </configuration>
-                </plugin>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>${maven-resources-plugin.version}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin-version}</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
 
-                <plugin>
-                    <groupId>com.jayway.maven.plugins.android.generation2</groupId>
-                    <artifactId>android-maven-plugin</artifactId>
-                    <version>${android-maven-plugin.version}</version>
-                    <extensions>true</extensions>
-                    <configuration>
-                        <sdk>
-                            <path>${env.ANDROID_HOME}</path>
-                            <platform>${android.sdk.platform}</platform>
-                        </sdk>
-                        <undeployBeforeDeploy>true</undeployBeforeDeploy>
-                        <manifest>
-                            <versionName>${project.version}</versionName>
-                            <versionCodeUpdateFromVersion>true</versionCodeUpdateFromVersion>
-                        </manifest>
-                        <proguard>
-                            <skip>true</skip>
-                            <config>proguard.cfg</config>
-                        </proguard>
-                    </configuration>
+            <plugin>
+                <groupId>com.jayway.maven.plugins.android.generation2</groupId>
+                <artifactId>android-maven-plugin</artifactId>
+                <version>${android-maven-plugin.version}</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <sdk>
+                        <path>${env.ANDROID_HOME}</path>
+                        <platform>${android.sdk.platform}</platform>
+                    </sdk>
+                    <undeployBeforeDeploy>true</undeployBeforeDeploy>
+                    <manifest>
+                        <versionName>${project.version}</versionName>
+                        <versionCodeUpdateFromVersion>true</versionCodeUpdateFromVersion>
+                    </manifest>
+                    <proguard>
+                        <skip>true</skip>
+                        <config>proguard.cfg</config>
+                    </proguard>
+                </configuration>
+            </plugin>
 
-                </plugin>
-
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-source-plugin</artifactId>
-                    <version>${maven-source-plugin-version}</version>
-                    <executions>
-                        <execution>
-                            <id>attach-sources</id>
-                            <goals>
-                                <goal>jar</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-javadoc-plugin</artifactId>
-                    <version>${maven-javadoc-plugin-version}</version>
-                    <configuration>
-                        <quiet>true</quiet>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <id>attach-javadocs</id>
-                            <goals>
-                                <goal>jar</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-                <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>emma-maven-plugin</artifactId>
-                    <configuration>
-                        <filters>
-                            <filter>-*.R</filter>
-                            <filter>-*.R$*</filter>
-                            <filter>-*.Manifest</filter>
-                            <filter>-*.BuildConfig</filter>
-                        </filters>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </pluginManagement>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>${maven-source-plugin-version}</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${maven-javadoc-plugin-version}</version>
+                <configuration>
+                    <quiet>true</quiet>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>emma-maven-plugin</artifactId>
+                <configuration>
+                    <filters>
+                        <filter>-*.R</filter>
+                        <filter>-*.R$*</filter>
+                        <filter>-*.Manifest</filter>
+                        <filter>-*.BuildConfig</filter>
+                    </filters>
+                </configuration>
+            </plugin>
+        </plugins>
     </build>
-
 </project>
