@@ -11,8 +11,8 @@
 
     <groupId>com.thehayro</groupId>
     <artifactId>infiniteviewpager-sample</artifactId>
-    <version>0.1-SNAPSHOT</version>
-    <packaging>pom</packaging>
+    <version>0.1</version>
+    <packaging>apk</packaging>
     <url>http://thehayro.com</url>
 
     <name>InfiniteViewPager-Sample</name>
@@ -34,7 +34,7 @@
         <!-- Dependency Versions -->
         <com.google.android-version>4.3_r1</com.google.android-version>
         <support-v4-version>r13</support-v4-version>
-        <infiniteviewpager.version>0.1-SNAPSHOT</infiniteviewpager.version>
+        <infiniteviewpager.version>0.1</infiniteviewpager.version>
         <maven-resources-plugin.version>2.6</maven-resources-plugin.version>
         <maven-compiler-plugin-version>3.1</maven-compiler-plugin-version>
         <android-maven-plugin.version>3.6.1</android-maven-plugin.version>
@@ -67,7 +67,26 @@
 
     <build>
 
-        <plugins>
+            <sourceDirectory>src</sourceDirectory>
+            <plugins>
+                <plugin>
+                    <groupId>com.jayway.maven.plugins.android.generation2</groupId>
+                    <artifactId>android-maven-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <id>manifestUpdate</id>
+                            <phase>process-resources</phase>
+                            <goals>
+                                <goal>manifest-update</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
+
+
+
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>

@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.thehayro.infiniteviewpager;
+package com.thehayro.view;
 
-import com.thehayro.infiniteviewpager.internal.Constants;
-import com.thehayro.infiniteviewpager.internal.PageModel;
+import com.thehayro.internal.Constants;
+import com.thehayro.internal.PageModel;
 
 import android.support.v4.view.PagerAdapter;
 import android.util.Log;
@@ -24,7 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * Base class providing the adapter to populate inside of a {@link com.thehayro.infiniteviewpager.InfiniteViewPager}.
+ * Base class providing the adapter to populate inside of a {@link com.thehayro.view.InfiniteViewPager}.
  * The indication for each page is up the implementation. Meaning that it is up to the implementation what the next
  * and previous page indication is. This is more generic than the regular PagerAdapter
  * implementation, where the pages are indicated by its index and accessed through
@@ -33,7 +33,7 @@ import android.view.ViewGroup;
  *
  * When you implement an adapter you must implement the following methods:
  * <ul>
- *     <li>{@link com.thehayro.infiniteviewpager.InfinitePagerAdapter#instantiateItem(Object)}</li>
+ *     <li>{@link com.thehayro.view.InfinitePagerAdapter#instantiateItem(Object)}</li>
  *     <li>{@link InfinitePagerAdapter#getNextIndicator()}</li>
  *     <li>{@link InfinitePagerAdapter#getPreviousIndicator()}</li>
  * </ul>

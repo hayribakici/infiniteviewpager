@@ -4,10 +4,10 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
 
-    <com.thehayro.infiniteviewpager.InfiniteViewPager
+    <com.thehayro.view.InfiniteViewPager
         android:id="@+id/infinite_viewpager"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"></com.thehayro.infiniteviewpager.InfiniteViewPager>
+        android:layout_height="fill_parent"/>
 
 </LinearLayout>
 

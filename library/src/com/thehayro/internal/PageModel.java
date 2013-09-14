@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.thehayro.infiniteviewpager.internal;
+package com.thehayro.internal;
 
 import android.view.View;
 import android.view.ViewGroup;

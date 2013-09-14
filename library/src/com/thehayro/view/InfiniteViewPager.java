@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-package com.thehayro.infiniteviewpager;
+package com.thehayro.view;
 
-import static com.thehayro.infiniteviewpager.internal.Constants.ADAPTER_STATE;
-import static com.thehayro.infiniteviewpager.internal.Constants.LOG_TAG;
-import static com.thehayro.infiniteviewpager.internal.Constants.PAGE_POSITION_CENTER;
-import static com.thehayro.infiniteviewpager.internal.Constants.PAGE_POSITION_LEFT;
-import static com.thehayro.infiniteviewpager.internal.Constants.PAGE_POSITION_RIGHT;
-import static com.thehayro.infiniteviewpager.internal.Constants.SUPER_STATE;
+import static com.thehayro.internal.Constants.ADAPTER_STATE;
+import static com.thehayro.internal.Constants.LOG_TAG;
+import static com.thehayro.internal.Constants.PAGE_POSITION_CENTER;
+import static com.thehayro.internal.Constants.PAGE_POSITION_LEFT;
+import static com.thehayro.internal.Constants.PAGE_POSITION_RIGHT;
+import static com.thehayro.internal.Constants.SUPER_STATE;
 
-import com.thehayro.infiniteviewpager.internal.Constants;
+import com.thehayro.internal.Constants;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -66,8 +66,11 @@ public class InfiniteViewPager extends ViewPager {
     public void onRestoreInstanceState(final Parcelable state) {
         final InfinitePagerAdapter adapter = (InfinitePagerAdapter) getAdapter();
         if (adapter == null) {
-            Log.d(LOG_TAG, "onRestoreInstanceState adapter == null");
+            if (Constants.DEBUG) {
+                Log.w(LOG_TAG, "onRestoreInstanceState adapter == null");
+            }
             super.onRestoreInstanceState(state);
+            return;
         }
         if (state instanceof Bundle) {
             Bundle bundle = (Bundle) state;
@@ -119,6 +122,19 @@ public class InfiniteViewPager extends ViewPager {
                 }
             }
         });
+    }
+
+    @Override
+    public final void setCurrentItem(final int item) {
+        throw new RuntimeException("Cannot perform setCurrentItem on infiniteViewPager");
+    }
+
+    public final void setCurrentPage(final Object indicator) {
+        final PagerAdapter adapter = getAdapter();
+        if (adapter == null) {
+            return;
+        }
+
     }
 
     @Override

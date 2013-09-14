@@ -16,8 +16,8 @@
 
 package com.thehayro.infiniteviewpagersample;
 
-import com.thehayro.infiniteviewpager.InfinitePagerAdapter;
-import com.thehayro.infiniteviewpager.InfiniteViewPager;
+import com.thehayro.view.InfinitePagerAdapter;
+import com.thehayro.view.InfiniteViewPager;
 
 import android.app.Activity;
 import android.os.Bundle;

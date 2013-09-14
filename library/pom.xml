@@ -20,7 +20,7 @@
 
     <groupId>com.thehayro</groupId>
     <artifactId>infiniteviewpager</artifactId>
-    <version>0.1</version>
+    <version>0.1-SNAPSHOT</version>
     <packaging>apklib</packaging>
     <description>A modified ViewPager that allows infinite paging</description>
     <url>http://thehayro.com</url>
