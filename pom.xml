@@ -27,11 +27,12 @@
 
     <groupId>com.thehayro</groupId>
     <artifactId>infiniteviewpager-parent</artifactId>
+    <name>InfiniteViewPager (Parent)</name>
     <version>0.2</version>
     <packaging>pom</packaging>
     <description>A modified ViewPager that allows infinite paging</description>
     <url>http://thehayro.com</url>
-    <name>InfiniteViewPager</name>
+
     <modules>
         <module>infiniteviewpager</module>
         <module>infiniteviewpager-sample</module>
@@ -88,10 +89,6 @@
                     <configuration>
                         <source>${java.version}</source>
                         <target>${java.version}</target>
-                        <showWarnings>true</showWarnings>
-                        <compilerArguments>
-                            <Xlint />
-                        </compilerArguments>
                     </configuration>
                 </plugin>
 
@@ -104,14 +101,20 @@
                         <sdk>
                             <platform>${android.sdk.platform}</platform>
                         </sdk>
+                        <undeployBeforeDeploy>true</undeployBeforeDeploy>
+                        <mergeManifests>true</mergeManifests>
+                        <manifest>
+                            <versionName>${project.version}</versionName>
+                            <versionCodeUpdateFromVersion>true</versionCodeUpdateFromVersion>
+                        </manifest>
                     </configuration>
                 </plugin>
 
-                <!--<plugin>-->
-                    <!--<groupId>org.codehaus.mojo</groupId>-->
-                    <!--<artifactId>build-helper-maven-plugin</artifactId>-->
-                    <!--<version>1.8</version>-->
-                <!--</plugin>-->
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>build-helper-maven-plugin</artifactId>
+                    <version>1.8</version>
+                </plugin>
 
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -122,66 +125,17 @@
                     </configuration>
                 </plugin>
 
-                <plugin>
-                    <groupId>com.google.code.maven-replacer-plugin</groupId>
-                    <artifactId>maven-replacer-plugin</artifactId>
-                    <version>1.4.0</version>
-                </plugin>
             </plugins>
         </pluginManagement>
+
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
                 <version>${maven-resources-plugin.version}</version>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven-compiler-plugin-version}</version>
-                <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
-                </configuration>
-            </plugin>
 
-            <plugin>
-                <groupId>com.jayway.maven.plugins.android.generation2</groupId>
-                <artifactId>android-maven-plugin</artifactId>
-                <version>${android-maven-plugin.version}</version>
-                <extensions>true</extensions>
 
-                <configuration>
-
-                    <sdk>
-                        <path>${env.ANDROID_HOME}</path>
-                        <platform>${android.sdk.platform}</platform>
-                    </sdk>
-                    <undeployBeforeDeploy>true</undeployBeforeDeploy>
-                    <manifest>
-                        <versionName>${project.version}</versionName>
-                        <versionCodeUpdateFromVersion>true</versionCodeUpdateFromVersion>
-                    </manifest>
-                    <proguard>
-                        <skip>true</skip>
-                        <config>proguard.cfg</config>
-                    </proguard>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <version>${maven-source-plugin-version}</version>
-                <executions>
-                    <execution>
-                        <id>attach-sources</id>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
@@ -207,19 +161,20 @@
                 </configuration>
             </plugin>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-gpg-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>sign-artifacts</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>sign</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+            <!--<plugin>-->
+                <!--<groupId>org.apache.maven.plugins</groupId>-->
+                <!--<artifactId>maven-gpg-plugin</artifactId>-->
+                <!--<version>1.4</version>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<id>sign-artifacts</id>-->
+                        <!--<phase>verify</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>sign</goal>-->
+                        <!--</goals>-->
+                    <!--</execution>-->
+                <!--</executions>-->
+            <!--</plugin>-->
         </plugins>
 
     </build>

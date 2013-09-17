@@ -22,6 +22,10 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Internal model of a page
+ * @param <T> the datatype of the {@link com.thehayro.view.InfinitePagerAdapter} indicator.
+ */
 public final class PageModel<T> {
     private T mIndicator;
 
@@ -40,9 +44,14 @@ public final class PageModel<T> {
         }
     }
 
+    /**
+     *
+     * @return {@code true} if the model has child views.
+     */
     public boolean hasChildren() {
         return mChildren != null && mChildren.size() != 0;
     }
+
 
     private void emptyChildren() {
         if (hasChildren()) {

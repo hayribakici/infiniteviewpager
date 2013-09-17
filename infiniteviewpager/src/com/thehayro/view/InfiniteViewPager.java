@@ -100,7 +100,7 @@ public class InfiniteViewPager extends ViewPager {
             }
 
             @Override
-            public void onPageScrollStateChanged(int state) {
+            public void onPageScrollStateChanged(final int state) {
                 final InfinitePagerAdapter adapter = (InfinitePagerAdapter) getAdapter();
                 if (adapter == null) {
                     return;
@@ -129,10 +129,24 @@ public class InfiniteViewPager extends ViewPager {
         throw new RuntimeException("Cannot perform setCurrentItem on infiniteViewPager");
     }
 
-    public final void setCurrentPage(final Object indicator) {
+    /**
+     *
+     * @param indicator
+     */
+    public final void setCurrentItem(final Object indicator) {
         final PagerAdapter adapter = getAdapter();
         if (adapter == null) {
             return;
+        }
+        final InfinitePagerAdapter infinitePagerAdapter = (InfinitePagerAdapter) adapter;
+        final Object currentIndicator = infinitePagerAdapter.getCurrentIndicator();
+        if (currentIndicator.getClass() != indicator.getClass()) {
+            return;
+        }
+        infinitePagerAdapter.reset();
+        infinitePagerAdapter.setCurrentIndicator(indicator);
+        for (int i = 0; i < Constants.PAGE_COUNT; i++) {
+            infinitePagerAdapter.fillPage(i);
         }
 
     }

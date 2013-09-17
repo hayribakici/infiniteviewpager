@@ -44,10 +44,6 @@ public class MyActivity extends Activity {
 
     private class MyInfinitePagerAdapter extends InfinitePagerAdapter<Integer> {
 
-        public MyInfinitePagerAdapter(final Integer init) {
-            super(init);
-        }
-
         @Override
         public ViewGroup instantiateItem(Integer indicator) {
             Log.d("InfiniteViewPager", "instantiating page " + indicator);

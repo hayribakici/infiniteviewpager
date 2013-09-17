@@ -4,7 +4,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
 
-    <com.thehayro.view.InfiniteViewPager
+    <main.java.thehayro.view.InfiniteViewPager
         android:id="@+id/infinite_viewpager"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"/>

@@ -3,14 +3,6 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <developers>
-        <developer>
-            <id>thehayro</id>
-            <name>Hayri Bakici</name>
-            <email>thehayro@gmail.com</email>
-        </developer>
-    </developers>
-
     <parent>
         <groupId>com.thehayro</groupId>
         <artifactId>infiniteviewpager-parent</artifactId>
@@ -19,29 +11,8 @@
     </parent>
 
     <artifactId>infiniteviewpager</artifactId>
-    <version>0.2</version>
+    <name>InfiniteViewPager</name>
     <packaging>apklib</packaging>
-
-    <scm>
-        <connection>scm:git:git@github.com:thehayro/infiniteviewpager.git</connection>
-        <developerConnection>scm:git:git@github.com:thehayro/infiniteviewpager.git</developerConnection>
-        <url>https://github.com/thehayro/infiniteviewpager</url>
-        <tag>HEAD</tag>
-    </scm>
-
-    <properties>
-        <!-- Project Properties -->
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-
-        <!-- Dependency Versions -->
-        <com.google.android-version>4.3_r1</com.google.android-version>
-        <maven-resources-plugin.version>2.6</maven-resources-plugin.version>
-        <maven-compiler-plugin-version>3.1</maven-compiler-plugin-version>
-        <android-maven-plugin.version>3.6.1</android-maven-plugin.version>
-        <maven-source-plugin-version>2.2.1</maven-source-plugin-version>
-        <maven-javadoc-plugin-version>2.9.1</maven-javadoc-plugin-version>
-    </properties>
 
 
     <dependencies>
@@ -49,6 +20,7 @@
         <dependency>
             <groupId>com.google.android</groupId>
             <artifactId>android</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
@@ -58,13 +30,9 @@
     </dependencies>
 
     <build>
+        <!--<finalName>${project.artifactId}</finalName>-->
         <sourceDirectory>src</sourceDirectory>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>${maven-resources-plugin.version}</version>
-            </plugin>
 
             <plugin>
                 <groupId>com.jayway.maven.plugins.android.generation2</groupId>
@@ -75,32 +43,27 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <configuration>
-                    <skip>true</skip>
-                </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-release-plugin</artifactId>
-                <version>2.4</version>
-                <configuration>
-                    <autoVersionSubmodules>true</autoVersionSubmodules>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-gpg-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>sign-artifacts</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>sign</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+            <!--<plugin>-->
+                <!--<groupId>org.codehaus.mojo</groupId>-->
+                <!--<artifactId>build-helper-maven-plugin</artifactId>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<phase>package</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>attach-artifact</goal>-->
+                        <!--</goals>-->
+                        <!--<configuration>-->
+                            <!--<artifacts>-->
+                                <!--<artifact>-->
+                                    <!--<type>jar</type>-->
+                                    <!--<file>${project.build.directory}/${project.build.finalName}.jar</file>-->
+                                <!--</artifact>-->
+                            <!--</artifacts>-->
+                        <!--</configuration>-->
+                    <!--</execution>-->
+                <!--</executions>-->
+            <!--</plugin>-->
         </plugins>
     </build>
 </project>
