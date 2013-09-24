@@ -15,9 +15,6 @@
     <packaging>apk</packaging>
 
 
-    <properties>
-        <infiniteviewpager.version>0.2-SNAPSHOT</infiniteviewpager.version>
-    </properties>
 
 
     <dependencies>
@@ -31,27 +28,18 @@
         <dependency>
             <groupId>com.thehayro</groupId>
             <artifactId>infiniteviewpager</artifactId>
-            <version>${infiniteviewpager.version}</version>
+            <version>${project.version}</version>
             <type>apklib</type>
         </dependency>
 
     </dependencies>
     <build>
-        <finalName>${project.artifactId}</finalName>
         <sourceDirectory>src</sourceDirectory>
         <plugins>
             <plugin>
                 <groupId>com.jayway.maven.plugins.android.generation2</groupId>
                 <artifactId>android-maven-plugin</artifactId>
                 <extensions>true</extensions>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <configuration>
-                    <skip>true</skip>
-                </configuration>
             </plugin>
         </plugins>
     </build>

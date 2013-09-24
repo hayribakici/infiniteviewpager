@@ -44,6 +44,15 @@ public class MyActivity extends Activity {
 
     private class MyInfinitePagerAdapter extends InfinitePagerAdapter<Integer> {
 
+        /**
+         * Standard constructor.
+         *
+         * @param initValue the initial indicator value the ViewPager should start with.
+         */
+        public MyInfinitePagerAdapter(final Integer initValue) {
+            super(initValue);
+        }
+
         @Override
         public ViewGroup instantiateItem(Integer indicator) {
             Log.d("InfiniteViewPager", "instantiating page " + indicator);
