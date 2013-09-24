@@ -23,7 +23,9 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -36,10 +38,17 @@ public class MyActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        InfiniteViewPager viewPager = (InfiniteViewPager) findViewById(R.id.infinite_viewpager);
+        final InfiniteViewPager viewPager = (InfiniteViewPager) findViewById(R.id.infinite_viewpager);
         viewPager.setAdapter(new MyInfinitePagerAdapter(0));
         viewPager.setPageMargin(20);
 
+        final Button btn = (Button) findViewById(R.id.current_item_btn);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                viewPager.setCurrentIndicator(6);
+            }
+        });
     }
 
     private class MyInfinitePagerAdapter extends InfinitePagerAdapter<Integer> {
@@ -56,7 +65,8 @@ public class MyActivity extends Activity {
         @Override
         public ViewGroup instantiateItem(Integer indicator) {
             Log.d("InfiniteViewPager", "instantiating page " + indicator);
-            LinearLayout layout = (LinearLayout) ((LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE)).inflate(R
+            final LinearLayout layout = (LinearLayout) ((LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE))
+                .inflate(R
                 .layout
                 .complex_page_layout, null);
             final TextView text = (TextView) layout.findViewById(R.id.moving_view_x);
