@@ -27,7 +27,7 @@
     <groupId>com.thehayro</groupId>
     <artifactId>infiniteviewpager-parent</artifactId>
     <name>InfiniteViewPager (Parent)</name>
-    <version>0.2</version>
+    <version>0.3-SNAPSHOT</version>
     <packaging>pom</packaging>
     <description>A modified ViewPager that allows infinite paging</description>
     <url>http://thehayro.com</url>
