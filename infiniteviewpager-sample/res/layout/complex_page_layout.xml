@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/holo_blue_light">
+
+    <TextView
+        android:id="@+id/moving_view_y"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="@string/app_name" />
+
+    <TextView
+        android:id="@+id/moving_view_x"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="@string/app_name" />
+
+    <TextView
+        android:id="@+id/moving_view_1"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="@string/app_name" />
+
+    <TextView
+        android:id="@+id/moving_view_2"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="@string/app_name" />
+
+    <TextView
+        android:id="@+id/moving_view_3"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="@string/app_name" />
+
+    <RelativeLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
+        <Button android:layout_height="wrap_content" android:layout_width="wrap_content"
+            android:text="@android:string/cancel" android:id="@+id/btn"/>
+
+        <ImageView android:layout_height="wrap_content" android:layout_width="wrap_content"
+            android:background="@drawable/ic_launcher" android:layout_below="@id/btn"/>
+    </RelativeLayout>
+
+</LinearLayout>
