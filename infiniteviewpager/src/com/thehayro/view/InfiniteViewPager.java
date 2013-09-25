@@ -133,7 +133,7 @@ public class InfiniteViewPager extends ViewPager {
      *
      * @param indicator
      */
-    public final void setCurrentItem(final Object indicator) {
+    public final void setCurrentIndicator(final Object indicator) {
         final PagerAdapter adapter = getAdapter();
         if (adapter == null) {
             return;
