@@ -5,11 +5,12 @@
     <parent>
         <groupId>com.thehayro</groupId>
         <artifactId>infiniteviewpager-parent</artifactId>
-        <version>0.3</version>
+        <version>0.4-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>infiniteviewpager-sample</artifactId>
+  <version>0.2</version>
     <name>InfiniteViewPager-Sample</name>
     <packaging>apk</packaging>
 
@@ -27,7 +28,7 @@
         <dependency>
             <groupId>com.thehayro</groupId>
             <artifactId>infiniteviewpager</artifactId>
-            <version>${project.version}</version>
+            <version>0.4-SNAPSHOT</version>
             <type>apklib</type>
         </dependency>
 
