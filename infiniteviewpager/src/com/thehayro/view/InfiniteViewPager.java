@@ -126,7 +126,10 @@ public class InfiniteViewPager extends ViewPager {
 
     @Override
     public final void setCurrentItem(final int item) {
-        throw new RuntimeException("Cannot perform setCurrentItem on infiniteViewPager");
+        if (item != PAGE_POSITION_CENTER) {
+            throw new RuntimeException("Cannot change page index unless its 1.");
+        }
+        super.setCurrentItem(item);
     }
 
     /**
