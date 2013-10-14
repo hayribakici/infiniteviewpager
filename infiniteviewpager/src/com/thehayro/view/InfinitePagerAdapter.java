@@ -43,8 +43,6 @@ import android.view.ViewGroup;
  */
 public abstract class InfinitePagerAdapter<T> extends PagerAdapter {
 
-
-
     private PageModel<T>[] mPageModels;
 
     private T mCurrentIndicator;
