@@ -38,7 +38,10 @@ import android.util.Log;
  */
 public class InfiniteViewPager extends ViewPager {
 
+    private static final String TAG = "InfiniteViewPager";
+
     private int mCurrPosition;
+    private OnInfinitePageChangeListener mListener;
 
     public InfiniteViewPager(Context context) {
         this(context, null);
@@ -87,20 +90,30 @@ public class InfiniteViewPager extends ViewPager {
         setCurrentItem(PAGE_POSITION_CENTER);
         setOnPageChangeListener(new OnPageChangeListener() {
             @Override
-            public void onPageScrolled(int i, float v, int i2) {
-
+            public void onPageScrolled(int i, float positionOffset, int positionOffsetPixels) {
+                if (mListener != null && getAdapter() != null) {
+                    final InfinitePagerAdapter adapter = (InfinitePagerAdapter) getAdapter();
+                    mListener.onPageScrolled(adapter.getCurrentIndicator(), positionOffset, positionOffsetPixels);
+                }
             }
 
             @Override
             public void onPageSelected(int position) {
                 mCurrPosition = position;
                 if (Constants.DEBUG) {
-                    Log.d("InfiniteViewPager", "on page " + position);
+                    Log.d(TAG, "on page " + position);
+                }
+                if (mListener != null && getAdapter() != null) {
+                    final InfinitePagerAdapter adapter = (InfinitePagerAdapter) getAdapter();
+                    mListener.onPageSelected(adapter.getCurrentIndicator());
                 }
             }
 
             @Override
             public void onPageScrollStateChanged(final int state) {
+                if (mListener != null) {
+                    mListener.onPageScrollStateChanged(state);
+                }
                 final InfinitePagerAdapter adapter = (InfinitePagerAdapter) getAdapter();
                 if (adapter == null) {
                     return;
@@ -133,8 +146,8 @@ public class InfiniteViewPager extends ViewPager {
     }
 
     /**
-     *
-     * @param indicator
+     * Set the current {@code indicator}.
+     * @param indicator the new indicator to set.
      */
     public final void setCurrentIndicator(final Object indicator) {
         final PagerAdapter adapter = getAdapter();
@@ -151,7 +164,6 @@ public class InfiniteViewPager extends ViewPager {
         for (int i = 0; i < Constants.PAGE_COUNT; i++) {
             infinitePagerAdapter.fillPage(i);
         }
-
     }
 
     @Override
@@ -170,5 +182,43 @@ public class InfiniteViewPager extends ViewPager {
         } else {
             throw new IllegalArgumentException("Adapter should be an instance of InfinitePagerAdapter.");
         }
+    }
+
+    public void setOnInfinitePageChangeListener(OnInfinitePageChangeListener listener) {
+        mListener = listener;
+    }
+
+    /**
+     * Callback interface for responding to changing state of the selected indicator.
+     */
+    public static interface OnInfinitePageChangeListener {
+
+        /**
+         * This method will be invoked when the current page is scrolled, either as part
+         * of a programmatically initiated smooth scroll or a user initiated touch scroll.
+         *
+         * @param indicator Indicator of the first page currently being displayed.
+         * @param positionOffset Value from [0, 1) indicating the offset from the page at position.
+         * @param positionOffsetPixels Value in pixels indicating the offset from position.
+         */
+        void onPageScrolled(Object indicator, float positionOffset, int positionOffsetPixels);
+
+        /**
+         * This method will be invoked when a new page has been selected.
+         * @param indicator the indicator of this page.
+         */
+        void onPageSelected(Object indicator);
+
+        /**
+         * Called when the scroll state changes. Useful for discovering when the user
+         * begins dragging, when the pager is automatically settling to the current page,
+         * or when it is fully stopped/idle.
+         *
+         * @param state The new scroll state.
+         * @see ViewPager#SCROLL_STATE_IDLE
+         * @see ViewPager#SCROLL_STATE_DRAGGING
+         * @see ViewPager#SCROLL_STATE_SETTLING
+         */
+        void onPageScrollStateChanged(final int state);
     }
 }
