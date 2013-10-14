@@ -27,7 +27,7 @@
     <groupId>com.thehayro</groupId>
     <artifactId>infiniteviewpager-parent</artifactId>
     <name>InfiniteViewPager (Parent)</name>
-    <version>0.4</version>
+    <version>0.5-SNAPSHOT</version>
     <packaging>pom</packaging>
     <description>A modified ViewPager that allows infinite paging</description>
     <url>http://thehayro.com</url>
@@ -41,7 +41,7 @@
         <connection>scm:git:git@github.com:thehayro/infiniteviewpager.git</connection>
         <developerConnection>scm:git:git@github.com:thehayro/infiniteviewpager.git</developerConnection>
         <url>https://github.com/thehayro/infiniteviewpager</url>
-        <tag>infiniteviewpager-parent-0.4</tag>
+        <tag>infiniteviewpager-parent-0.2</tag>
     </scm>
 
     <properties>
