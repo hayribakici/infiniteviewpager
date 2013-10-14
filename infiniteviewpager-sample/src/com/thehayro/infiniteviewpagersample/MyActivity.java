@@ -45,17 +45,17 @@ public class MyActivity extends Activity {
             @Override
             public void onPageScrolled(final Object indicator, final float positionOffset,
                                        final int positionOffsetPixels) {
-                Log.d("InfiniteViewPager", "onPageScrolled ".concat(String.valueOf(indicator)));
+
             }
 
             @Override
             public void onPageSelected(final Object indicator) {
-                Log.d("InfiniteViewPager", "onPageSelected " + indicator.toString());
+
             }
 
             @Override
             public void onPageScrollStateChanged(final int state) {
-                Log.d("InfiniteViewPager", "state " + String.valueOf(state));
+                
             }
         });
 
