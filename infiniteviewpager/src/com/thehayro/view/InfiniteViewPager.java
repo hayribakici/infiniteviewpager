@@ -40,7 +40,7 @@ public class InfiniteViewPager extends ViewPager {
 
     private static final String TAG = "InfiniteViewPager";
 
-    private int mCurrPosition;
+    private int mCurrPosition = PAGE_POSITION_CENTER;
     private OnInfinitePageChangeListener mListener;
 
     public InfiniteViewPager(Context context) {

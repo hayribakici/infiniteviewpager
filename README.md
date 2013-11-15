@@ -33,6 +33,8 @@ Also see [website] for further details.
 
 Changelog
 ----
+ - 0.4.1 fix #1 (thanks to RogerParis)
+ - 0.4 added OnInfinitePageChangeListener
  - 0.3 fixed some errors
  - 0.2 Added custom 'setCurrentItem()'
  - 0.1 initial release
