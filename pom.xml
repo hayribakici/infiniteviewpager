@@ -27,7 +27,7 @@
     <groupId>com.thehayro</groupId>
     <artifactId>infiniteviewpager-parent</artifactId>
     <name>InfiniteViewPager (Parent)</name>
-    <version>0.4-SNAPSHOT</version>
+    <version>0.5.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <description>A modified ViewPager that allows infinite paging</description>
     <url>http://thehayro.com</url>
@@ -49,7 +49,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <android.sdk.platform>18</android.sdk.platform>
-        <support-v4-version>r13</support-v4-version>
+        <support-v4-version>r7</support-v4-version>
         <java.version>1.6</java.version>
 
         <!-- Dependency Versions -->

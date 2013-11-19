@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
         <groupId>com.thehayro</groupId>
         <artifactId>infiniteviewpager-parent</artifactId>
-        <version>0.4-SNAPSHOT</version>
+        <version>0.4</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>infiniteviewpager-sample</artifactId>
-  <version>0.2</version>
+    <version>0.5.0-SNAPSHOT</version>
     <name>InfiniteViewPager-Sample</name>
     <packaging>apk</packaging>
-
-
 
 
     <dependencies>
@@ -22,13 +21,14 @@
         <dependency>
             <groupId>com.google.android</groupId>
             <artifactId>android</artifactId>
+            <version>4.3_r1</version>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>com.thehayro</groupId>
             <artifactId>infiniteviewpager</artifactId>
-            <version>0.3</version>
+            <version>0.5.0-SNAPSHOT</version>
             <type>apklib</type>
         </dependency>
 

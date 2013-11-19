@@ -46,6 +46,8 @@ public abstract class InfinitePagerAdapter<T> extends PagerAdapter {
     private PageModel<T>[] mPageModels;
 
     private T mCurrentIndicator;
+    private T mMaxValue = null;
+    private T mMinValue = null;
 
     /**
      * Standard constructor.
@@ -224,7 +226,7 @@ public abstract class InfinitePagerAdapter<T> extends PagerAdapter {
     }
 
     @Override
-    public void destroyItem(final ViewGroup container, final int position, final Object object) {
+    public final void destroyItem(final ViewGroup container, final int position, final Object object) {
         final PageModel model = (PageModel) object;
         container.removeView(model.getParentView());
     }
@@ -232,6 +234,30 @@ public abstract class InfinitePagerAdapter<T> extends PagerAdapter {
     @Override
     public final boolean isViewFromObject(final View view, final Object o) {
         return view == ((PageModel)o).getParentView();
+    }
+
+    public final void setMaxValue(final T value) {
+        mMaxValue = value;
+    }
+
+    public final void setMinValue(final T value) {
+        mMinValue = value;
+    }
+
+    public T getMaxValue() {
+        return mMaxValue;
+    }
+
+    public T getMinValue() {
+        return mMinValue;
+    }
+
+    public boolean isMaxValue(final T value) {
+        return mMaxValue != null && mMaxValue.equals(value);
+    }
+
+    public boolean isMinValue(final T value) {
+        return mMinValue != null && mMinValue.equals(value);
     }
 
     // Debug related methods

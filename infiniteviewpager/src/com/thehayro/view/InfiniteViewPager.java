@@ -52,6 +52,7 @@ public class InfiniteViewPager extends ViewPager {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public Parcelable onSaveInstanceState() {
         final InfinitePagerAdapter adapter = (InfinitePagerAdapter) getAdapter();
         if (adapter == null) {
@@ -66,6 +67,7 @@ public class InfiniteViewPager extends ViewPager {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public void onRestoreInstanceState(final Parcelable state) {
         final InfinitePagerAdapter adapter = (InfinitePagerAdapter) getAdapter();
         if (adapter == null) {
@@ -76,7 +78,7 @@ public class InfiniteViewPager extends ViewPager {
             return;
         }
         if (state instanceof Bundle) {
-            Bundle bundle = (Bundle) state;
+            final Bundle bundle = (Bundle) state;
             final String representation = bundle.getString(ADAPTER_STATE);
             final Object c = adapter.convertToIndicator(representation);
             adapter.setCurrentIndicator(c);
@@ -110,6 +112,7 @@ public class InfiniteViewPager extends ViewPager {
             }
 
             @Override
+            @SuppressWarnings("unchecked")
             public void onPageScrollStateChanged(final int state) {
                 if (mListener != null) {
                     mListener.onPageScrollStateChanged(state);
@@ -121,14 +124,22 @@ public class InfiniteViewPager extends ViewPager {
 
                 if (state == ViewPager.SCROLL_STATE_IDLE) {
                     if (mCurrPosition == PAGE_POSITION_LEFT) {
+                        final Object prevIndicator = adapter.getPreviousIndicator();
+                        if (adapter.isMinValue(prevIndicator)) {
+                            return;
+                        }
                         adapter.movePageContents(PAGE_POSITION_CENTER, PAGE_POSITION_RIGHT);
                         adapter.movePageContents(PAGE_POSITION_LEFT, PAGE_POSITION_CENTER);
-                        adapter.setCurrentIndicator(adapter.getPreviousIndicator());
+                        adapter.setCurrentIndicator(prevIndicator);
                         adapter.fillPage(PAGE_POSITION_LEFT);
                     } else if (mCurrPosition == PAGE_POSITION_RIGHT) {
+                        final Object nextIndicator = adapter.getNextIndicator();
+                        if (adapter.isMaxValue(nextIndicator)) {
+                            return;
+                        }
                         adapter.movePageContents(PAGE_POSITION_CENTER, PAGE_POSITION_LEFT);
                         adapter.movePageContents(PAGE_POSITION_RIGHT, PAGE_POSITION_CENTER);
-                        adapter.setCurrentIndicator(adapter.getNextIndicator());
+                        adapter.setCurrentIndicator(nextIndicator);
                         adapter.fillPage(PAGE_POSITION_RIGHT);
                     }
                     setCurrentItem(PAGE_POSITION_CENTER, false);
@@ -149,6 +160,7 @@ public class InfiniteViewPager extends ViewPager {
      * Set the current {@code indicator}.
      * @param indicator the new indicator to set.
      */
+    @SuppressWarnings("unchecked")
     public final void setCurrentIndicator(final Object indicator) {
         final PagerAdapter adapter = getAdapter();
         if (adapter == null) {

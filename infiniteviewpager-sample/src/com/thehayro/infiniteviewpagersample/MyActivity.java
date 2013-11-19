@@ -39,23 +39,23 @@ public class MyActivity extends Activity {
         setContentView(R.layout.main);
 
         final InfiniteViewPager viewPager = (InfiniteViewPager) findViewById(R.id.infinite_viewpager);
-        viewPager.setAdapter(new MyInfinitePagerAdapter(0));
+        final MyInfinitePagerAdapter adapter = new MyInfinitePagerAdapter(0);
+        adapter.setMinValue(-1);
+        adapter.setMaxValue(4);
+        viewPager.setAdapter(adapter);
         viewPager.setPageMargin(20);
         viewPager.setOnInfinitePageChangeListener(new InfiniteViewPager.OnInfinitePageChangeListener() {
             @Override
             public void onPageScrolled(final Object indicator, final float positionOffset,
                                        final int positionOffsetPixels) {
-                Log.d(InfiniteViewPager.TAG, "onPageScrolled ".concat(String.valueOf(indicator)));
             }
 
             @Override
             public void onPageSelected(final Object indicator) {
-                Log.d(InfiniteViewPager.TAG, "onPageSelected " + indicator.toString());
             }
 
             @Override
             public void onPageScrollStateChanged(final int state) {
-                Log.d(InfiniteViewPager.TAG, "state " + String.valueOf(state));
             }
         });
 
