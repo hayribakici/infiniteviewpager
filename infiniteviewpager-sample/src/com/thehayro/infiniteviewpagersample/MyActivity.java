@@ -55,7 +55,7 @@ public class MyActivity extends Activity {
 
             @Override
             public void onPageScrollStateChanged(final int state) {
-                
+
             }
         });
 
