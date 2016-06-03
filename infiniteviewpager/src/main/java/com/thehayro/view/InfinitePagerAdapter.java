@@ -62,7 +62,7 @@ public abstract class InfinitePagerAdapter<T> extends PagerAdapter {
      */
     @Override
     public final Object instantiateItem(final ViewGroup container, final int position) {
-        if (Constants.DEBUG) {
+        if (BuildConfig.DEBUG) {
             Log.i("InfiniteViewPager", String.format("instantiating position %s", position));
         }
         final PageModel<T> model = createPageModel(position);
@@ -76,7 +76,7 @@ public abstract class InfinitePagerAdapter<T> extends PagerAdapter {
      * @param position the page index to fill the page.
      */
     void fillPage(final int position) {
-        if (Constants.DEBUG) {
+        if (BuildConfig.DEBUG) {
             Log.d("InfiniteViewPager", "setup Page " + position);
             printPageModels("before newPage");
         }
@@ -141,7 +141,7 @@ public abstract class InfinitePagerAdapter<T> extends PagerAdapter {
             Log.w(Constants.LOG_TAG, "fillPage no model found " + fromModel + " " + toModel);
             return;
         }
-        if (Constants.DEBUG) {
+        if (BuildConfig.DEBUG) {
             Log.d("InfiniteViewPager",
                 String.format("Moving page %s to %s, indicator from %s to %s", from, to,
                 fromModel.getIndicator(), toModel.getIndicator()));
@@ -155,11 +155,11 @@ public abstract class InfinitePagerAdapter<T> extends PagerAdapter {
             toModel.addChild(view);
         }
 
-        if (Constants.DEBUG) {
+        if (BuildConfig.DEBUG) {
             printPageModels("transfer");
         }
         mPageModels[to].setIndicator(fromModel.getIndicator());
-        if (Constants.DEBUG) {
+        if (BuildConfig.DEBUG) {
             printPageModels("after");
         }
     }

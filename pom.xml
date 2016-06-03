@@ -48,8 +48,8 @@
         <!-- Project Properties -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <android.sdk.platform>18</android.sdk.platform>
-        <support-v4-version>18.0.0</support-v4-version>
+        <android.sdk.platform>23</android.sdk.platform>
+        <support-v4-version>23.4.0</support-v4-version>
         <java.version>1.6</java.version>
 
         <!-- Dependency Versions -->
