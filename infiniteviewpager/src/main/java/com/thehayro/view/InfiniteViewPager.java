@@ -58,7 +58,6 @@ public class InfiniteViewPager extends ViewPager {
         mListeners = Collections.synchronizedList(new ArrayList<OnInfinitePageChangeListener>());
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     @SuppressWarnings("unchecked")
     public Parcelable onSaveInstanceState() {
@@ -74,7 +73,6 @@ public class InfiniteViewPager extends ViewPager {
         return bundle;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     @SuppressWarnings("unchecked")
     public void onRestoreInstanceState(final Parcelable state) {
@@ -128,7 +126,6 @@ public class InfiniteViewPager extends ViewPager {
                 }
             }
 
-            @SuppressWarnings("unchecked")
             @Override
             @SuppressWarnings("unchecked")
             public void onPageScrollStateChanged(final int state) {
@@ -215,6 +212,19 @@ public class InfiniteViewPager extends ViewPager {
         if (currentIndicator.getClass() != indicator.getClass()) {
             return;
         }
+        if (infinitePagerAdapter.isGreaterThanMaxValue(indicator)) {
+            setCurrentIndicatorInternal(infinitePagerAdapter, infinitePagerAdapter.getMaxValue());
+            return;
+        }
+        if (infinitePagerAdapter.isLesserThanMinValue(indicator)) {
+            setCurrentIndicatorInternal(infinitePagerAdapter, infinitePagerAdapter.getMinValue());
+            return;
+        }
+        setCurrentIndicatorInternal(infinitePagerAdapter, indicator);
+    }
+
+    @SuppressWarnings("unchecked")
+    private void setCurrentIndicatorInternal(InfinitePagerAdapter infinitePagerAdapter, Object indicator) {
         infinitePagerAdapter.reset();
         infinitePagerAdapter.setCurrentIndicator(indicator);
         for (int i = 0; i < Constants.PAGE_COUNT; i++) {

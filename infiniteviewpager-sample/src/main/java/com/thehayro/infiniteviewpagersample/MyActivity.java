@@ -16,6 +16,7 @@
 
 package com.thehayro.infiniteviewpagersample;
 
+import com.thehayro.view.ComparableInfiniteViewPgaerAdapter;
 import com.thehayro.view.InfinitePagerAdapter;
 import com.thehayro.view.InfiniteViewPager;
 
@@ -68,7 +69,7 @@ public class MyActivity extends Activity {
         });
     }
 
-    private class MyInfinitePagerAdapter extends InfinitePagerAdapter<Integer> {
+    private class MyInfinitePagerAdapter extends ComparableInfiniteViewPgaerAdapter<Integer> {
 
         /**
          * Standard constructor.

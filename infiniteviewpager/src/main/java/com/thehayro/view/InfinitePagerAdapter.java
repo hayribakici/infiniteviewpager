@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 Onur-Hayri Bakici
+ * Copyright (C) 2013, 2016 Onur-Hayri Bakici
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,6 +20,8 @@ import static com.thehayro.internal.Constants.PAGE_COUNT;
 import com.thehayro.internal.Constants;
 import com.thehayro.internal.PageModel;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
 import android.util.Log;
 import android.view.View;
@@ -53,7 +55,7 @@ public abstract class InfinitePagerAdapter<T> extends PagerAdapter {
      * Standard constructor.
      * @param initValue the initial indicator value the ViewPager should start with.
      */
-    public InfinitePagerAdapter(T initValue) {
+    public InfinitePagerAdapter(@NonNull T initValue) {
         mCurrentIndicator = initValue;
 
         mPageModels = new PageModel[PAGE_COUNT];
@@ -111,6 +113,7 @@ public abstract class InfinitePagerAdapter<T> extends PagerAdapter {
         return new PageModel<T>(view, indicator);
     }
 
+    @NonNull
     protected final T getCurrentIndicator() {
         return mCurrentIndicator;
     }
@@ -236,21 +239,27 @@ public abstract class InfinitePagerAdapter<T> extends PagerAdapter {
         return view == ((PageModel)o).getParentView();
     }
 
-    public final void setMaxValue(final T value) {
+    public final void setMaxValue(@NonNull T value) {
         mMaxValue = value;
     }
 
-    public final void setMinValue(final T value) {
+    public final void setMinValue(@NonNull T value) {
         mMinValue = value;
     }
 
+    @Nullable
     public T getMaxValue() {
         return mMaxValue;
     }
 
+    @Nullable
     public T getMinValue() {
         return mMinValue;
     }
+
+    public abstract boolean isGreaterThanMaxValue(@NonNull T value);
+
+    public abstract boolean isLesserThanMinValue(@NonNull T value);
 
     public boolean isMaxValue(final T value) {
         return mMaxValue != null && mMaxValue.equals(value);

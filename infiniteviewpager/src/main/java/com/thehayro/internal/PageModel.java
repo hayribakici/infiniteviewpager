@@ -37,7 +37,7 @@ public final class PageModel<T> {
         mParentView = parent;
         mIndicator = indicator;
         final int size = parent.getChildCount();
-        mChildren = new ArrayList<View>(size);
+        mChildren = new ArrayList<>(size);
 
         for (int i = 0; i < size; i++) {
             mChildren.add(parent.getChildAt(i));
