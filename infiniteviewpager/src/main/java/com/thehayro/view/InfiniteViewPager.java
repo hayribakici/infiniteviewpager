@@ -16,15 +16,6 @@
 
 package com.thehayro.view;
 
-import static com.thehayro.internal.Constants.ADAPTER_STATE;
-import static com.thehayro.internal.Constants.LOG_TAG;
-import static com.thehayro.internal.Constants.PAGE_POSITION_CENTER;
-import static com.thehayro.internal.Constants.PAGE_POSITION_LEFT;
-import static com.thehayro.internal.Constants.PAGE_POSITION_RIGHT;
-import static com.thehayro.internal.Constants.SUPER_STATE;
-
-import com.thehayro.internal.Constants;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -33,6 +24,17 @@ import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.util.Log;
 
+import com.thehayro.internal.Constants;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import static com.thehayro.internal.Constants.LOG_TAG;
+import static com.thehayro.internal.Constants.PAGE_POSITION_CENTER;
+import static com.thehayro.internal.Constants.PAGE_POSITION_LEFT;
+import static com.thehayro.internal.Constants.PAGE_POSITION_RIGHT;
+
 /**
  * ViewPager that allows infinite scrolling.
  */
@@ -40,8 +42,12 @@ public class InfiniteViewPager extends ViewPager {
 
     private static final String TAG = "InfiniteViewPager";
 
-    private int mCurrPosition;
-    private OnInfinitePageChangeListener mListener;
+    private static final String SUPER_STATE = "super_state";
+    private static final String ADAPTER_STATE = "adapter_state";
+
+    private int mCurrPosition = PAGE_POSITION_CENTER;
+
+    private final List<OnInfinitePageChangeListener> mListeners;
 
     public InfiniteViewPager(Context context) {
         this(context, null);
@@ -49,8 +55,10 @@ public class InfiniteViewPager extends ViewPager {
 
     public InfiniteViewPager(Context context, AttributeSet attrs) {
         super(context, attrs);
+        mListeners = Collections.synchronizedList(new ArrayList<OnInfinitePageChangeListener>());
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     @SuppressWarnings("unchecked")
     public Parcelable onSaveInstanceState() {
@@ -66,12 +74,13 @@ public class InfiniteViewPager extends ViewPager {
         return bundle;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     @SuppressWarnings("unchecked")
     public void onRestoreInstanceState(final Parcelable state) {
         final InfinitePagerAdapter adapter = (InfinitePagerAdapter) getAdapter();
         if (adapter == null) {
-            if (Constants.DEBUG) {
+            if (BuildConfig.DEBUG) {
                 Log.w(LOG_TAG, "onRestoreInstanceState adapter == null");
             }
             super.onRestoreInstanceState(state);
@@ -90,32 +99,41 @@ public class InfiniteViewPager extends ViewPager {
 
     private void initInfiniteViewPager() {
         setCurrentItem(PAGE_POSITION_CENTER);
-        setOnPageChangeListener(new OnPageChangeListener() {
+        addOnPageChangeListener(new OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float positionOffset, int positionOffsetPixels) {
-                if (mListener != null && getAdapter() != null) {
-                    final InfinitePagerAdapter adapter = (InfinitePagerAdapter) getAdapter();
-                    mListener.onPageScrolled(adapter.getCurrentIndicator(), positionOffset, positionOffsetPixels);
+                if (mListeners != null && getAdapter() != null) {
+                    PagerAdapter pagerAdapter = getAdapter();
+                    if (!(pagerAdapter instanceof InfinitePagerAdapter)) {
+                        throw new IllegalArgumentException("Adapter has to be instance of InfinitePagerAdapter");
+                    }
+                    final InfinitePagerAdapter adapter = (InfinitePagerAdapter) pagerAdapter;
+                    firePageScrolled(adapter.getCurrentIndicator(), positionOffset, positionOffsetPixels);
                 }
             }
 
             @Override
             public void onPageSelected(int position) {
                 mCurrPosition = position;
-                if (Constants.DEBUG) {
+                if (BuildConfig.DEBUG) {
                     Log.d(TAG, "on page " + position);
                 }
-                if (mListener != null && getAdapter() != null) {
-                    final InfinitePagerAdapter adapter = (InfinitePagerAdapter) getAdapter();
-                    mListener.onPageSelected(adapter.getCurrentIndicator());
+                if (mListeners != null && getAdapter() != null) {
+                    PagerAdapter pagerAdapter = getAdapter();
+                    if (!(pagerAdapter instanceof InfinitePagerAdapter)) {
+                        throw new IllegalArgumentException("Adapter has to be instance of InfinitePagerAdapter");
+                    }
+                    final InfinitePagerAdapter adapter = (InfinitePagerAdapter) pagerAdapter;
+                    firePageSelected(adapter.getCurrentIndicator());
                 }
             }
 
+            @SuppressWarnings("unchecked")
             @Override
             @SuppressWarnings("unchecked")
             public void onPageScrollStateChanged(final int state) {
-                if (mListener != null) {
-                    mListener.onPageScrollStateChanged(state);
+                if (mListeners != null) {
+                    firePageScrollStateChanged(state);
                 }
                 final InfinitePagerAdapter adapter = (InfinitePagerAdapter) getAdapter();
                 if (adapter == null) {
@@ -146,6 +164,32 @@ public class InfiniteViewPager extends ViewPager {
                 }
             }
         });
+    }
+
+    @SuppressWarnings("unchecked")
+    private void firePageScrolled(Object indicator, float positionOffset, int positionOffsetPixels) {
+        synchronized (mListeners) {
+            for (OnInfinitePageChangeListener listener : mListeners) {
+                listener.onPageScrolled(indicator, positionOffset, positionOffsetPixels);
+            }
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    private void firePageSelected(Object indicator) {
+        synchronized (mListeners) {
+            for (OnInfinitePageChangeListener listener : mListeners) {
+                listener.onPageSelected(indicator);
+            }
+        }
+    }
+
+    private void firePageScrollStateChanged(int state) {
+        synchronized (mListeners) {
+            for (OnInfinitePageChangeListener listener : mListeners) {
+                listener.onPageScrollStateChanged(state);
+            }
+        }
     }
 
     @Override
@@ -196,14 +240,18 @@ public class InfiniteViewPager extends ViewPager {
         }
     }
 
-    public void setOnInfinitePageChangeListener(OnInfinitePageChangeListener listener) {
-        mListener = listener;
+    public void addOnInfinitePageChangeListener(OnInfinitePageChangeListener listener) {
+        mListeners.add(listener);
+    }
+
+    public void removeOnInifinitePageChangeListener(OnInfinitePageChangeListener listener) {
+        mListeners.remove(listener);
     }
 
     /**
      * Callback interface for responding to changing state of the selected indicator.
      */
-    public static interface OnInfinitePageChangeListener {
+    public interface OnInfinitePageChangeListener<T> {
 
         /**
          * This method will be invoked when the current page is scrolled, either as part
@@ -213,13 +261,13 @@ public class InfiniteViewPager extends ViewPager {
          * @param positionOffset Value from [0, 1) indicating the offset from the page at position.
          * @param positionOffsetPixels Value in pixels indicating the offset from position.
          */
-        void onPageScrolled(Object indicator, float positionOffset, int positionOffsetPixels);
+        void onPageScrolled(T indicator, float positionOffset, int positionOffsetPixels);
 
         /**
          * This method will be invoked when a new page has been selected.
          * @param indicator the indicator of this page.
          */
-        void onPageSelected(Object indicator);
+        void onPageSelected(T indicator);
 
         /**
          * Called when the scroll state changes. Useful for discovering when the user

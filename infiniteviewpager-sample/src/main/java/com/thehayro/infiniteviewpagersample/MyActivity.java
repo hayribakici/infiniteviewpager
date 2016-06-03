@@ -44,7 +44,7 @@ public class MyActivity extends Activity {
         adapter.setMaxValue(4);
         viewPager.setAdapter(adapter);
         viewPager.setPageMargin(20);
-        viewPager.setOnInfinitePageChangeListener(new InfiniteViewPager.OnInfinitePageChangeListener() {
+        viewPager.addOnInfinitePageChangeListener(new InfiniteViewPager.OnInfinitePageChangeListener() {
             @Override
             public void onPageScrolled(final Object indicator, final float positionOffset,
                                        final int positionOffsetPixels) {
@@ -82,10 +82,8 @@ public class MyActivity extends Activity {
         @Override
         public ViewGroup instantiateItem(Integer indicator) {
             Log.d("InfiniteViewPager", "instantiating page " + indicator);
-            final LinearLayout layout = (LinearLayout) ((LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE))
-                .inflate(R
-                .layout
-                .complex_page_layout, null);
+            LayoutInflater layoutInflater = LayoutInflater.from(MyActivity.this);
+            final LinearLayout layout = (LinearLayout) layoutInflater.inflate(R.layout.complex_page_layout, null);
             final TextView text = (TextView) layout.findViewById(R.id.moving_view_x);
             text.setText(String.format("Page %s", indicator));
             Log.i("InfiniteViewPager", String.format("textView.text() == %s", text.getText()));
