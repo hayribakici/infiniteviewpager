@@ -1,0 +1,27 @@
+apply plugin: 'com.android.library'
+
+ext {
+    PUBLISH_GROUP_ID = 'com.thehayro'
+    PUBLISH_ARTIFACT_ID = 'infiniteviewpager'
+    PUBLISH_VERSION = '0.4.2'
+}
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.1"
+
+    defaultConfig {
+        minSdkVersion 11
+        targetSdkVersion 25
+        versionCode versionCode
+        versionName version
+    }
+}
+
+dependencies {
+    compile "com.android.support:support-v4:25.0.1";
+}
+// or use the remote copy to keep update with latest changes
+apply from: 'https://raw.githubusercontent.com/blundell/release-android-library/master/android-release-aar.gradle'
+
+//apply from: 'https://raw.github.com/chrisbanes/gradle-mvn-push/master/gradle-mvn-push.gradle'

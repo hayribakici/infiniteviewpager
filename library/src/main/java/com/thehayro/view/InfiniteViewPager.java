@@ -263,9 +263,6 @@ public class InfiniteViewPager extends ViewPager {
          * or when it is fully stopped/idle.
          *
          * @param state The new scroll state.
-         * @see ViewPager#SCROLL_STATE_IDLE
-         * @see ViewPager#SCROLL_STATE_DRAGGING
-         * @see ViewPager#SCROLL_STATE_SETTLING
          */
         void onPageScrollStateChanged(final int state);
     }

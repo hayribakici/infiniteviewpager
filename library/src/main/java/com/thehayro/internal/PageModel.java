@@ -37,7 +37,7 @@ public final class PageModel<T> {
         mParentView = parent;
         mIndicator = indicator;
         final int size = parent.getChildCount();
-        mChildren = new ArrayList<View>(size);
+        mChildren = new ArrayList<>(size);
 
         for (int i = 0; i < size; i++) {
             mChildren.add(parent.getChildAt(i));
@@ -48,7 +48,7 @@ public final class PageModel<T> {
      *
      * @return {@code true} if the model has child views.
      */
-    public boolean hasChildren() {
+    private boolean hasChildren() {
         return mChildren != null && mChildren.size() != 0;
     }
 
@@ -77,7 +77,7 @@ public final class PageModel<T> {
         mParentView.removeView(view);
     }
 
-    public void addViewToParent(final View view) {
+    private void addViewToParent(final View view) {
         mParentView.addView(view);
     }
 
