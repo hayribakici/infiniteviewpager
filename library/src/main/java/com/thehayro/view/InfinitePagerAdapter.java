@@ -15,17 +15,17 @@
  */
 package com.thehayro.view;
 
-import static com.thehayro.internal.Constants.PAGE_COUNT;
-
-import com.thehayro.internal.Constants;
-import com.thehayro.internal.PageModel;
-
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.thehayro.internal.Constants;
+import com.thehayro.internal.PageModel;
+
+import static com.thehayro.internal.Constants.PAGE_COUNT;
 
 /**
  * Base class providing the adapter to populate inside of a {@link com.thehayro.view.InfiniteViewPager}.
@@ -34,49 +34,55 @@ import android.view.ViewGroup;
  * implementation, where the pages are indicated by its index and accessed through
  * {@link android.support.v4.view.ViewPager#setCurrentItem(int, boolean)}.
  * <p></p>
- *
+ * <p>
  * When you implement an adapter you must implement the following methods:
  * <ul>
- *     <li>{@link com.thehayro.view.InfinitePagerAdapter#instantiateItem(Object)}</li>
- *     <li>{@link InfinitePagerAdapter#getNextIndicator()}</li>
- *     <li>{@link InfinitePagerAdapter#getPreviousIndicator()}</li>
+ * <li>{@link com.thehayro.view.InfinitePagerAdapter#instantiateItem(Object)}</li>
+ * <li>{@link InfinitePagerAdapter#getNextIndicator()}</li>
+ * <li>{@link InfinitePagerAdapter#getPreviousIndicator()}</li>
  * </ul>
+ *
  * @param <T> an indicator datatype to distinguish the pages.
  */
 public abstract class InfinitePagerAdapter<T> extends PagerAdapter {
 
-    private PageModel<T>[] mPageModels;
+    @NonNull
+    private PageModel<T>[] pageModels;
 
-    private T mCurrentIndicator;
+    @NonNull
+    private T currentIndicator;
     private T mMaxValue = null;
     private T mMinValue = null;
 
     /**
      * Standard constructor.
+     *
      * @param initValue the initial indicator value the ViewPager should start with.
      */
     public InfinitePagerAdapter(@NonNull T initValue) {
-        mCurrentIndicator = initValue;
+        currentIndicator = initValue;
 
-        mPageModels = new PageModel[PAGE_COUNT];
+        pageModels = new PageModel[PAGE_COUNT];
     }
 
     /**
      * This method is only called, when this pagerAdapter is initialized.
      */
     @Override
-    public final Object instantiateItem(final ViewGroup container, final int position) {
+    @NonNull
+    public final Object instantiateItem(@NonNull final ViewGroup container, final int position) {
         if (BuildConfig.DEBUG) {
             Log.i("InfiniteViewPager", String.format("instantiating position %s", position));
         }
         final PageModel<T> model = createPageModel(position);
-        mPageModels[position] = model;
+        pageModels[position] = model;
         container.addView(model.getParentView());
         return model;
     }
 
     /**
      * fills the page on index {@code position}.
+     *
      * @param position the page index to fill the page.
      */
     void fillPage(final int position) {
@@ -84,7 +90,7 @@ public abstract class InfinitePagerAdapter<T> extends PagerAdapter {
             Log.d("InfiniteViewPager", "setup Page " + position);
             printPageModels("before newPage");
         }
-        final PageModel<T> oldModel = mPageModels[position];
+        final PageModel<T> oldModel = pageModels[position];
         final PageModel<T> newModel = createPageModel(position);
         if (oldModel == null || newModel == null) {
             Log.w(Constants.LOG_TAG, "fillPage no model found " + oldModel + " " + newModel);
@@ -97,25 +103,27 @@ public abstract class InfinitePagerAdapter<T> extends PagerAdapter {
             oldModel.addChild(newChild);
         }
 
-        mPageModels[position].setIndicator(newModel.getIndicator());
+        pageModels[position].setIndicator(newModel.getIndicator());
     }
 
     /**
      * Creates the internal page model. This method calls the {@link #instantiateItem(Object)} method
      * that creates the page content.
+     *
      * @param pagePosition the position in the pageModel array between [0..2]
      * @return a new instance of a page model.
      */
+    @NonNull
     private PageModel<T> createPageModel(final int pagePosition) {
         final T indicator = getIndicatorFromPagePosition(pagePosition);
         final ViewGroup view = instantiateItem(indicator);
 
-        return new PageModel<T>(view, indicator);
+        return new PageModel<>(view, indicator);
     }
 
     @NonNull
     protected final T getCurrentIndicator() {
-        return mCurrentIndicator;
+        return currentIndicator;
     }
 
     private T getIndicatorFromPagePosition(final int pagePosition) {
@@ -136,20 +144,21 @@ public abstract class InfinitePagerAdapter<T> extends PagerAdapter {
 
     /**
      * Package internal. Moves contents from page index {@code from} to page index {@code to}.
+     *
      * @param from page index to move contents from.
-     * @param to page index to move contents to.
+     * @param to   page index to move contents to.
      */
     void movePageContents(final int from, final int to) {
-        final PageModel<T> fromModel = mPageModels[from];
-        final PageModel<T> toModel = mPageModels[to];
+        final PageModel<T> fromModel = pageModels[from];
+        final PageModel<T> toModel = pageModels[to];
         if (fromModel == null || toModel == null) {
             Log.w(Constants.LOG_TAG, "fillPage no model found " + fromModel + " " + toModel);
             return;
         }
         if (BuildConfig.DEBUG) {
             Log.d("InfiniteViewPager",
-                String.format("Moving page %s to %s, indicator from %s to %s", from, to,
-                fromModel.getIndicator(), toModel.getIndicator()));
+                    String.format("Moving page %s to %s, indicator from %s to %s", from, to,
+                            fromModel.getIndicator(), toModel.getIndicator()));
             printPageModels("before");
         }
 
@@ -163,49 +172,50 @@ public abstract class InfinitePagerAdapter<T> extends PagerAdapter {
         if (BuildConfig.DEBUG) {
             printPageModels("transfer");
         }
-        mPageModels[to].setIndicator(fromModel.getIndicator());
+        pageModels[to].setIndicator(fromModel.getIndicator());
         if (BuildConfig.DEBUG) {
             printPageModels("after");
         }
     }
 
     void reset() {
-        for (PageModel<T> pageModel : mPageModels) {
-            pageModel.removeAllChildren();
+        for (PageModel<T> pageModel : pageModels) {
+            if (pageModel != null) {
+                pageModel.removeAllChildren();
+            }
         }
     }
 
     /**
      * Sets {@code indicator} as the current visible indicator.
+     *
      * @param indicator a indicator value.
      */
-    void setCurrentIndicator(final T indicator) {
-        mCurrentIndicator = indicator;
+    void setCurrentIndicator(@NonNull final T indicator) {
+        currentIndicator = indicator;
     }
 
 
     /**
-     *
      * @return the next indicator.
      */
     public abstract T getNextIndicator();
 
 
     /**
-     *
      * @return the previous indicator.
      */
     public abstract T getPreviousIndicator();
 
     /**
      * Instantiates a page.
+     *
      * @param indicator the indicator the page should be instantiated with.
      * @return a ViewGroup containing the page layout.
      */
     public abstract ViewGroup instantiateItem(T indicator);
 
     /**
-     *
      * @param currentIndicator the current value of the indicator.
      * @return a string representation of the current indicator.
      * @see #convertToIndicator(String)
@@ -216,6 +226,7 @@ public abstract class InfinitePagerAdapter<T> extends PagerAdapter {
 
     /**
      * Convert the represented string back to its indicator
+     *
      * @param representation the string representation of the current indicator.
      * @return the indicator.
      */
@@ -229,14 +240,14 @@ public abstract class InfinitePagerAdapter<T> extends PagerAdapter {
     }
 
     @Override
-    public final void destroyItem(final ViewGroup container, final int position, final Object object) {
+    public final void destroyItem(@NonNull final ViewGroup container, final int position, @NonNull final Object object) {
         final PageModel model = (PageModel) object;
         container.removeView(model.getParentView());
     }
 
     @Override
-    public final boolean isViewFromObject(final View view, final Object o) {
-        return view == ((PageModel)o).getParentView();
+    public final boolean isViewFromObject(@NonNull final View view, @NonNull final Object o) {
+        return view == ((PageModel) o).getParentView();
     }
 
     public final void setMaxValue(@NonNull T value) {
@@ -273,16 +284,16 @@ public abstract class InfinitePagerAdapter<T> extends PagerAdapter {
 
     private void printPageModels(final String tag) {
         for (int i = 0; i < PAGE_COUNT; i++) {
-            printPageModel(tag, mPageModels[i], i);
+            printPageModel(tag, pageModels[i], i);
         }
     }
 
     private void printPageModel(final String tag, final PageModel model, int modelPos) {
         final String builder = String.format("%s: ModelPos %s, indicator %s, " +
-            "Childcount %s viewChildCount %s tag %s",
-            tag, modelPos,
-            model.getIndicator(), model.getChildren().size(), model.getParentView().getChildCount(),
-            model.getParentView().getTag());
+                        "Childcount %s viewChildCount %s tag %s",
+                tag, modelPos,
+                model.getIndicator(), model.getChildren().size(), model.getParentView().getChildCount(),
+                model.getParentView().getTag());
         Log.d("InfiniteViewPager", builder);
     }
 

@@ -16,6 +16,7 @@
 
 package com.thehayro.internal;
 
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -24,72 +25,70 @@ import java.util.List;
 
 /**
  * Internal model of a page
+ *
  * @param <T> the datatype of the {@link com.thehayro.view.InfinitePagerAdapter} indicator.
  */
 public final class PageModel<T> {
-    private T mIndicator;
+    @NonNull
+    private T indicator;
 
-    private ViewGroup mParentView;
+    @NonNull
+    private ViewGroup parentView;
 
-    private List<View> mChildren;
+    @NonNull
+    private List<View> children;
 
-    public PageModel(final ViewGroup parent, final T indicator) {
-        mParentView = parent;
-        mIndicator = indicator;
+    public PageModel(@NonNull final ViewGroup parent, @NonNull final T indicator) {
+        parentView = parent;
+        this.indicator = indicator;
         final int size = parent.getChildCount();
-        mChildren = new ArrayList<>(size);
+        this.children = new ArrayList<>(size);
 
         for (int i = 0; i < size; i++) {
-            mChildren.add(parent.getChildAt(i));
+            children.add(parent.getChildAt(i));
         }
     }
-
-    /**
-     *
-     * @return {@code true} if the model has child views.
-     */
-    public boolean hasChildren() {
-        return mChildren != null && mChildren.size() != 0;
-    }
-
 
     private void emptyChildren() {
-        if (hasChildren()) {
-            mChildren.clear();
+        if (!children.isEmpty()) {
+            children.clear();
         }
     }
 
+    @NonNull
     public List<View> getChildren() {
-        return mChildren;
+        return children;
     }
 
     public void removeAllChildren() {
-        mParentView.removeAllViews();
+        parentView.removeAllViews();
         emptyChildren();
     }
 
     public void addChild(final View child) {
         addViewToParent(child);
-        mChildren.add(child);
+        children.add(child);
     }
 
     public void removeViewFromParent(final View view) {
-        mParentView.removeView(view);
+        parentView.removeView(view);
     }
 
-    public void addViewToParent(final View view) {
-        mParentView.addView(view);
+    private void addViewToParent(final View view) {
+        parentView.addView(view);
     }
 
+    @NonNull
     public ViewGroup getParentView() {
-        return mParentView;
+        return parentView;
     }
 
+    @NonNull
     public T getIndicator() {
-        return mIndicator;
+        return indicator;
     }
 
-    public void setIndicator(final T indicator) {
-        mIndicator = indicator;
+    public void setIndicator(@NonNull final T indicator) {
+        this.indicator = indicator;
     }
 }

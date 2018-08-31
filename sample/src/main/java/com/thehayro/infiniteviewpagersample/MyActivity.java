@@ -60,7 +60,7 @@ public class MyActivity extends Activity {
             }
         });
 
-        final Button btn = (Button) findViewById(R.id.current_item_btn);
+        final Button btn = findViewById(R.id.current_item_btn);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {

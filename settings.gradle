@@ -1,1 +1,1 @@
-include ':infiniteviewpager-sample', ':infiniteviewpager'
+include ':sample', ':library'

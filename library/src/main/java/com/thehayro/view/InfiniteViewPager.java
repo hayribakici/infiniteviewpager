@@ -19,6 +19,7 @@ package com.thehayro.view;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
@@ -45,9 +46,9 @@ public class InfiniteViewPager extends ViewPager {
     private static final String SUPER_STATE = "super_state";
     private static final String ADAPTER_STATE = "adapter_state";
 
-    private int mCurrPosition = PAGE_POSITION_CENTER;
+    private int currentPosition = PAGE_POSITION_CENTER;
 
-    private final List<OnInfinitePageChangeListener> mListeners;
+    private final List<OnInfinitePageChangeListener> listeners;
 
     public InfiniteViewPager(Context context) {
         this(context, null);
@@ -55,7 +56,7 @@ public class InfiniteViewPager extends ViewPager {
 
     public InfiniteViewPager(Context context, AttributeSet attrs) {
         super(context, attrs);
-        mListeners = Collections.synchronizedList(new ArrayList<OnInfinitePageChangeListener>());
+        listeners = Collections.synchronizedList(new ArrayList<OnInfinitePageChangeListener>());
     }
 
     @Override
@@ -100,7 +101,7 @@ public class InfiniteViewPager extends ViewPager {
         addOnPageChangeListener(new OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float positionOffset, int positionOffsetPixels) {
-                if (mListeners != null && getAdapter() != null) {
+                if (listeners != null && getAdapter() != null) {
                     PagerAdapter pagerAdapter = getAdapter();
                     if (!(pagerAdapter instanceof InfinitePagerAdapter)) {
                         throw new IllegalArgumentException("Adapter has to be instance of InfinitePagerAdapter");
@@ -112,11 +113,11 @@ public class InfiniteViewPager extends ViewPager {
 
             @Override
             public void onPageSelected(int position) {
-                mCurrPosition = position;
+                currentPosition = position;
                 if (BuildConfig.DEBUG) {
                     Log.d(TAG, "on page " + position);
                 }
-                if (mListeners != null && getAdapter() != null) {
+                if (listeners != null && getAdapter() != null) {
                     PagerAdapter pagerAdapter = getAdapter();
                     if (!(pagerAdapter instanceof InfinitePagerAdapter)) {
                         throw new IllegalArgumentException("Adapter has to be instance of InfinitePagerAdapter");
@@ -129,7 +130,7 @@ public class InfiniteViewPager extends ViewPager {
             @Override
             @SuppressWarnings("unchecked")
             public void onPageScrollStateChanged(final int state) {
-                if (mListeners != null) {
+                if (listeners != null) {
                     firePageScrollStateChanged(state);
                 }
                 final InfinitePagerAdapter adapter = (InfinitePagerAdapter) getAdapter();
@@ -138,7 +139,7 @@ public class InfiniteViewPager extends ViewPager {
                 }
 
                 if (state == ViewPager.SCROLL_STATE_IDLE) {
-                    if (mCurrPosition == PAGE_POSITION_LEFT) {
+                    if (currentPosition == PAGE_POSITION_LEFT) {
                         final Object prevIndicator = adapter.getPreviousIndicator();
                         if (adapter.isMinValue(prevIndicator)) {
                             return;
@@ -147,7 +148,7 @@ public class InfiniteViewPager extends ViewPager {
                         adapter.movePageContents(PAGE_POSITION_LEFT, PAGE_POSITION_CENTER);
                         adapter.setCurrentIndicator(prevIndicator);
                         adapter.fillPage(PAGE_POSITION_LEFT);
-                    } else if (mCurrPosition == PAGE_POSITION_RIGHT) {
+                    } else if (currentPosition == PAGE_POSITION_RIGHT) {
                         final Object nextIndicator = adapter.getNextIndicator();
                         if (adapter.isMaxValue(nextIndicator)) {
                             return;
@@ -165,8 +166,8 @@ public class InfiniteViewPager extends ViewPager {
 
     @SuppressWarnings("unchecked")
     private void firePageScrolled(Object indicator, float positionOffset, int positionOffsetPixels) {
-        synchronized (mListeners) {
-            for (OnInfinitePageChangeListener listener : mListeners) {
+        synchronized (listeners) {
+            for (OnInfinitePageChangeListener listener : listeners) {
                 listener.onPageScrolled(indicator, positionOffset, positionOffsetPixels);
             }
         }
@@ -174,16 +175,16 @@ public class InfiniteViewPager extends ViewPager {
 
     @SuppressWarnings("unchecked")
     private void firePageSelected(Object indicator) {
-        synchronized (mListeners) {
-            for (OnInfinitePageChangeListener listener : mListeners) {
+        synchronized (listeners) {
+            for (OnInfinitePageChangeListener listener : listeners) {
                 listener.onPageSelected(indicator);
             }
         }
     }
 
     private void firePageScrollStateChanged(int state) {
-        synchronized (mListeners) {
-            for (OnInfinitePageChangeListener listener : mListeners) {
+        synchronized (listeners) {
+            for (OnInfinitePageChangeListener listener : listeners) {
                 listener.onPageScrollStateChanged(state);
             }
         }
@@ -202,7 +203,7 @@ public class InfiniteViewPager extends ViewPager {
      * @param indicator the new indicator to set.
      */
     @SuppressWarnings("unchecked")
-    public final void setCurrentIndicator(final Object indicator) {
+    public final void setCurrentIndicator(@NonNull final Object indicator) {
         final PagerAdapter adapter = getAdapter();
         if (adapter == null) {
             return;
@@ -251,11 +252,11 @@ public class InfiniteViewPager extends ViewPager {
     }
 
     public void addOnInfinitePageChangeListener(OnInfinitePageChangeListener listener) {
-        mListeners.add(listener);
+        listeners.add(listener);
     }
 
     public void removeOnInifinitePageChangeListener(OnInfinitePageChangeListener listener) {
-        mListeners.remove(listener);
+        listeners.remove(listener);
     }
 
     /**
