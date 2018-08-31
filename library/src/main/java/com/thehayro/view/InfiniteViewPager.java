@@ -203,7 +203,7 @@ public class InfiniteViewPager extends ViewPager {
      * @param indicator the new indicator to set.
      */
     @SuppressWarnings("unchecked")
-    public final void setCurrentIndicator(@NonNull final Object indicator) {
+    public final <T> void setCurrentIndicator(@NonNull final T indicator) {
         final PagerAdapter adapter = getAdapter();
         if (adapter == null) {
             return;
@@ -225,7 +225,7 @@ public class InfiniteViewPager extends ViewPager {
     }
 
     @SuppressWarnings("unchecked")
-    private void setCurrentIndicatorInternal(InfinitePagerAdapter infinitePagerAdapter, Object indicator) {
+    private <T> void setCurrentIndicatorInternal(@NonNull InfinitePagerAdapter infinitePagerAdapter, @NonNull T indicator) {
         infinitePagerAdapter.reset();
         infinitePagerAdapter.setCurrentIndicator(indicator);
         for (int i = 0; i < Constants.PAGE_COUNT; i++) {

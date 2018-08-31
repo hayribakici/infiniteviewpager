@@ -42,7 +42,7 @@ import static com.thehayro.internal.Constants.PAGE_COUNT;
  * <li>{@link InfinitePagerAdapter#getPreviousIndicator()}</li>
  * </ul>
  *
- * @param <T> an indicator datatype to distinguish the pages.
+ * @param <T> an indicator data type to distinguish the pages.
  */
 public abstract class InfinitePagerAdapter<T> extends PagerAdapter {
 
@@ -51,8 +51,10 @@ public abstract class InfinitePagerAdapter<T> extends PagerAdapter {
 
     @NonNull
     private T currentIndicator;
-    private T mMaxValue = null;
-    private T mMinValue = null;
+    @Nullable
+    private T maxValue = null;
+    @Nullable
+    private T minValue = null;
 
     /**
      * Standard constructor.
@@ -250,34 +252,76 @@ public abstract class InfinitePagerAdapter<T> extends PagerAdapter {
         return view == ((PageModel) o).getParentView();
     }
 
-    public final void setMaxValue(@NonNull T value) {
-        mMaxValue = value;
+    /**
+     * Set the maximum value boundaries for the ViewPager. Set {@code null} to
+     * remove it.
+     * @param value the maximum value.
+     */
+    public final void setMaxValue(@Nullable T value) {
+        if (value != null) {
+            if (isLesserThanMinValue(value)) {
+                throw new IllegalArgumentException(String.format("value cannot be smaller than minValue (%s < %s)", value, minValue));
+            }
+        }
+        maxValue = value;
     }
 
-    public final void setMinValue(@NonNull T value) {
-        mMinValue = value;
+    /**
+     * Set the minimum value boundaries for the ViewPager. Set {@code null} to
+     * remove it.
+     * @param value the minimum value.
+     */
+    public final void setMinValue(@Nullable T value) {
+        if (value != null) {
+            if (isGreaterThanMaxValue(value)) {
+                throw new IllegalArgumentException(String.format("value cannot be larger than minValue (%s > %s)", value, maxValue));
+            }
+        }
+        minValue = value;
     }
 
     @Nullable
     public T getMaxValue() {
-        return mMaxValue;
+        return maxValue;
     }
 
     @Nullable
     public T getMinValue() {
-        return mMinValue;
+        return minValue;
     }
 
-    public abstract boolean isGreaterThanMaxValue(@NonNull T value);
+    /**
+     * Implement this method to check whether {@code value} is greater than
+     * {@code maxValue}.
+     * @param value the value to compare.
+     * @return {@code true} if the given parameter is greater than the set maximum value.
+     *
+     * @see #getMaxValue()
+     * @see com.thehayro.view.ComparableInfiniteViewPagerAdapter
+     */
+    public boolean isGreaterThanMaxValue(@NonNull T value) {
+        return false;
+    }
 
-    public abstract boolean isLesserThanMinValue(@NonNull T value);
+    /**
+     * Implement this method to check whether {@code value} is lesser than
+     * {@code minValue}.
+     * @param value the value to compare.
+     * @return {@code true} if the given parameter is lesser than the set minimum value.
+     *
+     * @see #getMinValue()
+     * @see com.thehayro.view.ComparableInfiniteViewPagerAdapter
+     */
+    public boolean isLesserThanMinValue(@NonNull T value) {
+        return false;
+    }
 
     public boolean isMaxValue(final T value) {
-        return mMaxValue != null && mMaxValue.equals(value);
+        return maxValue != null && maxValue.equals(value);
     }
 
     public boolean isMinValue(final T value) {
-        return mMinValue != null && mMinValue.equals(value);
+        return minValue != null && minValue.equals(value);
     }
 
     // Debug related methods

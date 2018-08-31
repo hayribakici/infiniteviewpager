@@ -16,8 +16,7 @@
 
 package com.thehayro.infiniteviewpagersample;
 
-import com.thehayro.view.ComparableInfiniteViewPgaerAdapter;
-import com.thehayro.view.InfinitePagerAdapter;
+import com.thehayro.view.ComparableInfiniteViewPagerAdapter;
 import com.thehayro.view.InfiniteViewPager;
 
 import android.app.Activity;
@@ -39,7 +38,7 @@ public class MyActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        final InfiniteViewPager viewPager = (InfiniteViewPager) findViewById(R.id.infinite_viewpager);
+        final InfiniteViewPager viewPager = findViewById(R.id.infinite_viewpager);
         final MyInfinitePagerAdapter adapter = new MyInfinitePagerAdapter(0);
         adapter.setMinValue(-1);
         adapter.setMaxValue(4);
@@ -69,7 +68,7 @@ public class MyActivity extends Activity {
         });
     }
 
-    private class MyInfinitePagerAdapter extends ComparableInfiniteViewPgaerAdapter<Integer> {
+    private class MyInfinitePagerAdapter extends ComparableInfiniteViewPagerAdapter<Integer> {
 
         /**
          * Standard constructor.
@@ -85,7 +84,7 @@ public class MyActivity extends Activity {
             Log.d("InfiniteViewPager", "instantiating page " + indicator);
             LayoutInflater layoutInflater = LayoutInflater.from(MyActivity.this);
             final LinearLayout layout = (LinearLayout) layoutInflater.inflate(R.layout.complex_page_layout, null);
-            final TextView text = (TextView) layout.findViewById(R.id.moving_view_x);
+            final TextView text = layout.findViewById(R.id.moving_view_x);
             text.setText(String.format("Page %s", indicator));
             Log.i("InfiniteViewPager", String.format("textView.text() == %s", text.getText()));
             layout.setTag(indicator);
