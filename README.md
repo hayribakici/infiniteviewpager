@@ -42,7 +42,7 @@ Also see [website] for further details.
 
 Changelog
 ----
- - 0.4.4 fix #10 (thanks to henrykvdb, naclcaleb)
+ - 0.4.5 fix #10 (thanks to henrykvdb, naclcaleb)
  - 0.4.3 fix #5 (thanks to germands)
  - 0.4.1 fix #1 (thanks to RogerParis)
  - 0.4 added OnInfinitePageChangeListener
