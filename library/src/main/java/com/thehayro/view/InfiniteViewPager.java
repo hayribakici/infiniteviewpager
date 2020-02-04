@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 Onur-Hayri Bakici
+ * Copyright (C) 2013, 2020 Onur Hayri Bakici
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,9 +19,9 @@ package com.thehayro.view;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.annotation.NonNull;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
+import androidx.annotation.NonNull;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 import android.util.AttributeSet;
 import android.util.Log;
 
@@ -194,6 +194,7 @@ public class InfiniteViewPager extends ViewPager {
      * Set the current {@code indicator}.
      * @param indicator the new indicator to set.
      */
+    @SuppressWarnings("unchecked")
     public final void setCurrentIndicator(@NonNull final Object indicator) {
         final PagerAdapter adapter = getAdapter();
         if (adapter == null) {

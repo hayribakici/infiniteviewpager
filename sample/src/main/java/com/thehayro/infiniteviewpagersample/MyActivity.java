@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 Onur-Hayri Bakici
+ * Copyright (C) 2013,2020 Onur Hayri Bakici
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,6 +28,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.content.Context;
 
 public class MyActivity extends Activity {
     /**
@@ -38,9 +39,9 @@ public class MyActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        final InfiniteViewPager viewPager = (InfiniteViewPager) findViewById(R.id.infinite_viewpager);
-        viewPager.setAdapter(new MyInfinitePagerAdapter(0));
-        viewPager.setPageMargin(20);
+        final InfiniteViewPager viewPager = findViewById(R.id.infinite_viewpager);
+        viewPager.setAdapter(new MyInfinitePagerAdapter(this, 0));
+
         viewPager.addOnInfinitePageChangeListener(new InfiniteViewPager.OnInfinitePageChangeListener() {
             @Override
             public void onPageScrolled(final Object indicator, final float positionOffset,
@@ -68,23 +69,25 @@ public class MyActivity extends Activity {
         });
     }
 
-    private class MyInfinitePagerAdapter extends InfinitePagerAdapter<Integer> {
+    private static class MyInfinitePagerAdapter extends InfinitePagerAdapter<Integer> {
 
+        private final Context context;
         /**
          * Standard constructor.
          *
          * @param initValue the initial indicator value the ViewPager should start with.
          */
-        public MyInfinitePagerAdapter(final Integer initValue) {
+        MyInfinitePagerAdapter(final Context context, final Integer initValue) {
             super(initValue);
+            this.context = context;
         }
 
         @Override
         public ViewGroup instantiateItem(Integer indicator) {
             Log.d("InfiniteViewPager", "instantiating page " + indicator);
-            LayoutInflater layoutInflater = LayoutInflater.from(MyActivity.this);
+            LayoutInflater layoutInflater = LayoutInflater.from(context);
             final LinearLayout layout = (LinearLayout) layoutInflater.inflate(R.layout.complex_page_layout, null);
-            final TextView text = (TextView) layout.findViewById(R.id.moving_view_x);
+            final TextView text = layout.findViewById(R.id.moving_view_x);
             text.setText(String.format("Page %s", indicator));
             Log.i("InfiniteViewPager", String.format("textView.text() == %s", text.getText()));
             layout.setTag(indicator);

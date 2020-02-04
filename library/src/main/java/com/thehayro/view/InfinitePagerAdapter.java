@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 Onur-Hayri Bakici
+ * Copyright (C) 2013,2020 Onur Hayri Bakici
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,8 +15,10 @@
  */
 package com.thehayro.view;
 
-import android.support.annotation.NonNull;
-import android.support.v4.view.PagerAdapter;
+import androidx.annotation.NonNull;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +33,7 @@ import static com.thehayro.internal.Constants.PAGE_COUNT;
  * The indication for each page is up the implementation. Meaning that it is up to the implementation what the next
  * and previous page indication is. This is more generic than the regular PagerAdapter
  * implementation, where the pages are indicated by its index and accessed through
- * {@link android.support.v4.view.ViewPager#setCurrentItem(int, boolean)}.
+ * {@link ViewPager#setCurrentItem(int, boolean)}.
  * <p></p>
  * <p>
  * When you implement an adapter you must implement the following methods:
@@ -56,6 +58,7 @@ public abstract class InfinitePagerAdapter<T> extends PagerAdapter {
      *
      * @param initValue the initial indicator value the ViewPager should start with.
      */
+    @SuppressWarnings("unchecked")
     public InfinitePagerAdapter(@NonNull T initValue) {
         currentIndicator = initValue;
 
@@ -118,6 +121,7 @@ public abstract class InfinitePagerAdapter<T> extends PagerAdapter {
         return new PageModel<>(view, indicator);
     }
 
+    @NonNull
     protected final T getCurrentIndicator() {
         return currentIndicator;
     }

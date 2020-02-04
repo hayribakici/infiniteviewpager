@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.thehayro.view"
-    android:versionCode="430"
-    android:versionName="0.4.3">
+<manifest package="com.thehayro.view">
 
-    <uses-sdk
-        android:minSdkVersion="14"
-        android:maxSdkVersion="27" />
 
 </manifest>
