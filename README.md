@@ -8,7 +8,7 @@ Get it
 
 ```groovy
 dependencies {
-    implementation 'com.github.hayribakici:infiniteviewpager:0.4.4'
+    implementation 'com.github.hayribakici:infiniteviewpager:develop-SNAPSHOT'
 }
 ```
 
