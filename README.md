@@ -1,3 +1,10 @@
+# THIS REPOSITORY IS DEPRACATED AND WILL BE READ-ONLY!
+
+Google released the [`ViewPager2`](https://developer.android.com/jetpack/androidx/releases/viewpager2) and replaces the original ViewPager. Since this project is based on the old ViewPager, this repository is now read-only. If you want to have in "infinite" implementation of `ViewPager2`, you can check out [`Infinite-ViewPager2`](https://github.com/zeph7/Infinite-ViewPager2).
+
+Thank you everyone for using this library.
+
+
 InfiniteViewPager
 =========
 
